@@ -43,7 +43,7 @@ Argo CD automates the deployment of the desired application states in the specif
 
 `Reference Link:` https://argo-cd.readthedocs.io/en/stable/
 
-## prerequesites ##
+## Prerequesites ##
 
 1. Install kubernetes cluster in your local system i.e Minikube, Kind or EKS in AWS etc.
 
@@ -79,9 +79,8 @@ Argo CD automates the deployment of the desired application states in the specif
 
 5. `https://localhost:8080/` —> login the ui, the default username is `admin`
 
-6. kubectl get secret argocd-initial-admin-secret -n argocd -o yaml —> we can get the password here
+6. kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo --> To get the passowrd to login the ArgoCD UI.
 
-7. echo <password> | base64 —decoded —> login by using decoded password
 
 `Reference Link to install necessary configurations`: https://argo-cd.readthedocs.io/en/stable/getting_started/
 
