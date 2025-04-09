@@ -82,7 +82,7 @@ Argo CD automates the deployment of the desired application states in the specif
 6. kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo --> To get the passowrd to login the ArgoCD UI.
 
 
-`Reference Link to install necessary configurations`: https://argo-cd.readthedocs.io/en/stable/getting_started/
+`Reference Link to install necessary configurations:` https://argo-cd.readthedocs.io/en/stable/getting_started/
 
 ## Configure Argocd With K8s Manifest Files ##
 
