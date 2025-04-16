@@ -2,7 +2,7 @@
 
 `What Is Argo CD?`
 
-Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes.
+Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. It syncs Kubernetes manifests from a Git repository and ensures the live state of the cluster matches the desired state.
 
 `Why Argo CD?`
 
@@ -21,19 +21,92 @@ Application definitions, configurations, and environments should be declarative 
 5. cluster disaster recovery
 
 
-`How it works?`
+`Core Components of ArgoCD`
+
+1. argocd-server-*
+
+✅ Provides the Web UI and REST API.
+
+✅ Handles user interactions (login, trigger syncs, manage apps).
+
+✅ Talks to Redis, the application controller, and repo server.
+
+2. argocd-repo-server-*
+
+✅ Clones and renders the Git repository content.
+
+✅ Handles Helm, Kustomize, plain YAML, etc.
+
+✅ Passes the rendered manifests to the application-controller.
+
+3. argocd-application-controller-0
+
+✅ The brains of ArgoCD.
+
+✅ Continuously monitors applications defined as Application CRDs.
+
+✅ Compares the live cluster state with the desired Git state.
+
+✅ If out of sync, it handles synchronization (depending on policy: auto/manual).
+
+4. argocd-applicationset-controller-*
+
+✅ Manages ApplicationSet resources.
+
+✅ Used to dynamically generate multiple Application objects based on a template.
+
+`Common use cases:`
+
+✅ Deploying to multiple clusters/environments
+
+✅ Managing microservices from a monorepo
+
+5. argocd-redis-*
+
+🧠 What it does?
+
+✅ Acts as in-memory cache to boost performance.
+
+`Used mainly by:`
+
+✅ argocd-server and argocd-repo-server
+
+✅ Stores transient app state, repo cache, etc.
+
+6. argocd-notifications-controller-*
+
+✅ Handles notifications about ArgoCD application events:
+
+✅ Sync success/failure
+
+✅ Health status changes
+
+`Sends alerts to:`
+
+✅ Slack, Microsoft Teams, Webhooks, etc.
+
+7. argocd-dex-server-*
+
+✅ Dex is an OpenID Connect (OIDC) identity provider.
+
+✅ Handles SSO authentication in ArgoCD (LDAP, GitHub, Google, etc.).
+
+✅ Works with ArgoCD’s RBAC to restrict/allow access.
+
+`Note:` As above all & points are pods, once you install the ArcoCD in the `K8s` you can able to see. Same has added the screenshot. `https://github.com/viswa2/argocd-demo-app?tab=readme-ov-file#deploy-argocd-in-k8s-cluster`
+
+`How does ArgoCD works?`
 
 Argo CD follows the GitOps pattern of using Git repositories as the source of truth for defining the desired application state. Kubernetes manifests can be specified in several ways:
 
-✅ kustomize applications
+✅ ArgoCD continuously monitors a Git repo
 
-✅ helm charts
+✅ It compares the desired state (Git) with the live state (K8s)
 
-✅ jsonnet files
+✅ If they differ, it can automatically sync (or wait for manual sync)
 
-✅ Plain directory of YAML/json manifests
+✅ It Supports kustomize applications, helm charts, jsonnet files, Plain directory of YAML/json manifests and Any custom config management tool configured as a config management plugin
 
-✅ Any custom config management tool configured as a config management plugin
 
 Argo CD automates the deployment of the desired application states in the specified target environments. Application deployments can track updates to branches, tags, or be pinned to a specific version of manifests at a Git commit
 
@@ -55,7 +128,9 @@ Argo CD automates the deployment of the desired application states in the specif
 
 4. check status `minikube status`
 
-5. brew install argocd --> It will download the argocd cli
+5. brew install argocd --> It will download the argocd cli and play around with it. 
+
+Link for ArgoCd Commands Refrence: `https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd/`
 
 ## Getting Started with Handson ##
 
@@ -73,7 +148,7 @@ Argo CD automates the deployment of the desired application states in the specif
 
 3. kubectl port-forward svc/argocd-server 8080:443 -n argocd  —> We need to login the argocd ui we are doing port forward
 
-4. kubectl get pod, svc -n argocd
+4. kubectl get pod, svc -n argocd --> check the pod svc status 
 
 ![alt text](Argocd-pods-svc.png)
 
