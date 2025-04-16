@@ -93,7 +93,11 @@ Application definitions, configurations, and environments should be declarative 
 
 ✅ Works with ArgoCD’s RBAC to restrict/allow access.
 
-`Note:` As above all & points are pods, once you install the ArcoCD in the `K8s` you can able to see. Same has added the screenshot. `https://github.com/viswa2/argocd-demo-app?tab=readme-ov-file#deploy-argocd-in-k8s-cluster`
+`Note:` As above all & points are pods, once you install the ArgoCD in the `K8s` you can able to see. Same has added the screenshot. `https://github.com/viswa2/argocd-demo-app?tab=readme-ov-file#deploy-argocd-in-k8s-cluster`
+
+`How They Work's Together?`
+
+![alt text](ArgoCD.png)
 
 `How does ArgoCD works?`
 
